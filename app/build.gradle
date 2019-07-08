@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: "de.mannodermaus.android-junit5"
+
 
 android {
     compileSdkVersion 28
@@ -10,12 +12,23 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    sourceSets {
+        androidTest.java.srcDirs += "src/common/java"
+        test.java.srcDirs += "src/common/java"
     }
 }
 
@@ -37,7 +50,7 @@ dependencies {
 
     // -------- LOCAL UNIT TESTS (use JUnit5)
     // JUnit Jupiter
-    def junit_jupiter_version = "5.4.2"
+    def junit_jupiter_version = "5.3.2"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_jupiter_version"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_jupiter_version"
@@ -47,7 +60,7 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
     // Dagger
-    def dagger_version = "2.22"
+    def dagger_version = "2.23.2"
 
     // Dagger2 core
     implementation "com.google.dagger:dagger:$dagger_version"
