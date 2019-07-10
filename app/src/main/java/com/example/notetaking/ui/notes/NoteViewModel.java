@@ -29,7 +29,6 @@ public class NoteViewModel extends ViewModel {
     // inject
     private final NoteRepository noteRepository;
 
-    // vars
     private MutableLiveData<Note> note  = new MutableLiveData<>();
     private MutableLiveData<ViewState> viewState = new MutableLiveData<>();
     private boolean isNewNote;
